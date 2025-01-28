@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Intractive Storyline  ',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -20,18 +20,39 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   final String title;
   const MyHomePage({super.key, required this.title});
 
   @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final commentSection = [
+    "Pumasok ka ba ngayon?",
+    "hindi man, ikaw?",
+    "Nah me chillin out my house",
+    "Hell yea! I like that",
+  ];
+  int currentValue = 0;
+
+  void nextLineComment (){ 
+    setState(() {
+      currentValue = (currentValue + 1) % commentSection.length;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors. grey[900],
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
         centerTitle: true,
         backgroundColor: Colors.red,
       ),
+
       body: Container(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -90,90 +111,40 @@ class MyHomePage extends StatelessWidget {
             ),
 
 // Chatting time
-            Container(
-              color: Colors.grey,
-              padding: EdgeInsets.all(10),
-              child: Text("Pumasok ka ba ngayon?",
-              style: TextStyle(
-                letterSpacing: 1.0,
-                fontFamily: 'RobotoCondensed',  
-              ),
-              ),
-              
-            ),
-            
-            Row(
-              mainAxisAlignment: MainAxisAlignment. end,
-              children: [
-                Container(
-                  color: const Color.fromARGB(255, 94, 37, 37),
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Text("hindi man, ikaw?",
-                  style: TextStyle(
-                    color: const Color.fromARGB(255, 255, 241, 241),
-                    letterSpacing: 1.0,
-                    fontFamily: 'RobotoCondensed',  
-                  ),
-                  ),
-                ),
-              ],
-            ),
-
-            Container(
-              color: Colors.grey,
-              padding: EdgeInsets.all(10),
-              child: Text("Nah me chillin out my house",
-              style: TextStyle(
-               letterSpacing: 1,
-               fontFamily: 'RobotoCondensed',  
-              ),
-              ),
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment. end,
-              children: [
-                Container(
-                  color: const Color.fromARGB(255, 94, 37, 37),
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Text("Hell yea! I like that",
-                  style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 1,
-                    fontFamily: 'RobotoCondensed',  
-                  ),
-                  ),
-                ),
-              ],
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 335),
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 185, vertical: 10),
-                  child: Text(""),
-                )
-              ],
-            )
-          ],
+          Column(
+            children: [
+              buildChatBubble (
+                commentSection[currentValue],
+                Color.fromARGB(255, 94, 37, 37),
+                Colors.white,
+              )
+            ],
+          ),
+          ]
         )
       ),
 
-// Background
-      backgroundColor: Colors. grey[900],
-
-// Button
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: nextLineComment,
         backgroundColor: Colors.green,
         child: Icon(Icons.send),
-        ),
+      ),
+    );
+  }
+  Widget buildChatBubble(String message, Color bgColor, Color textColor){
+    return Container(
+      color: bgColor,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        message,
+        style: TextStyle(
+        color: textColor,
+        letterSpacing: 1.0,
+        fontFamily: 'RobotoCondensed',
+       ),
+      ),
     );
   }
 }
+
