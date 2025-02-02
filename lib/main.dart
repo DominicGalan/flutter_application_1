@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/message_container.dart';
+import 'package:flutter_application_1/message_list.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,141 +12,105 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Intractive Storyline  ',
+      title: 'Act 3',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Activity 2: ChatBox'),
+      home: MessageList(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  final String title;
-  const MyHomePage({super.key, required this.title});
+class MessageList extends StatefulWidget {
+  const MessageList({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MessageList> createState() => _MessageListState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final commentSection = [
-    "Pumasok ka ba ngayon?",
-    "hindi man, ikaw?",
-    "Nah me chillin out my house",
-    "Hell yea! I like that",
+class _MessageListState extends State<MessageList> {
+  List<MessageListDesc> messaegListManage   = [
+    MessageListDesc(
+      name: "Jeril Cruz",
+      date: "2/2/2025",
+      message: "pre may nagiingay sa labas namin",
+      image: "./images/1054068.jpg",
+    ),
+    MessageListDesc(
+      name: "John Mungcal",
+      date: "2/2/2025",
+      message: "tara g",
+      image: "./images/Solo Leveling Cha Hae In.jpg",
+    ),
+    MessageListDesc(
+      name: "Jeremy Pangan",
+      date: "2/2/2025",
+      message: "https://comick.io/comic...",
+      image: "./images/Image2.jpg",
+    ),
+    MessageListDesc(
+      name: "Family",
+      date: "2/2/2025",
+      message: "Saan na kayo?",
+      image: "./images/Family.jpg",
+    ),
+    MessageListDesc(
+      name: "CPE 3A",
+      date: "1/27/2025",
+      message: "Announcement: During this time...",
+      image: "./images/ICpepe.jpg",
+    ),
+    MessageListDesc(
+      name: "Dave Nuada",
+      date: "1/23/2025",
+      message: "Pakisabihan sila na pumunta sila...",
+      image: "./images/profpic1.jpg",
+    ),
+    MessageListDesc(
+      name: "09762905176",
+      date: "1/22/2025",
+      message: "CONGRATUTALIONS!! NANALO KA NG...",
+      image: "./images/Anonymous.jpg",
+    ),
+    MessageListDesc(
+      name: "Only Boys",
+      date: "1/12/2025",
+      message: "*Racist* punta kana dito",
+      image: "./images/onlyboys.jpg",
+    ),
+    MessageListDesc(
+      name: "VB boys",
+      date: "1/6/2025",
+      message: "Kailan kayo pwede?",
+      image: "./images/VB.jpg",
+    ),
+    
   ];
-  int currentValue = 0;
-
-  void nextLineComment (){ 
-    setState(() {
-      currentValue = (currentValue + 1) % commentSection.length;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors. grey[900],
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          "Act 3: MessageList",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         centerTitle: true,
-        backgroundColor: Colors.red,
       ),
-
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [ 
-            Center(
-              child: CircleAvatar(
-                  backgroundImage: AssetImage('./images/profpic.jpg'),
-                  radius: 30,
-                ),
-              ),
-              Center(
-                child: Text(
-                "Neil Dominic Galan",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2.0,
-                  color: Colors.white, 
-                  fontFamily: 'RobotoCondensed',  
-                  ),
-                 ),
-              ), 
-
-// Icons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Icon(
-                    Icons.settings,
-                    color: Colors.red[200],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.green[200],
-                  ),
-                ),
-                Icon(
-                  Icons.image,
-                  color: Colors.blue[200],
-                ),
-              ],
-            ),
-
-// Lines
-            Divider(
-              height: 20,
-              color: const Color.fromARGB(255, 255, 141, 141),
-            ),
-
-// Chatting time
-          Column(
-            children: [
-              buildChatBubble (
-                commentSection[currentValue],
-                Color.fromARGB(255, 94, 37, 37),
-                Colors.white,
-              )
-            ],
-          ),
-          ]
-        )
+      body: ListView(
+        children: messaegListManage.map((message) => MessageContainer(message: message, 
+        delete: () {
+          setState(() {
+            messaegListManage.remove(message);
+          });
+        },)).toList(),
       ),
-
       floatingActionButton: FloatingActionButton(
-        onPressed: nextLineComment,
-        backgroundColor: Colors.green,
-        child: Icon(Icons.send),
-      ),
-    );
-  }
-  Widget buildChatBubble(String message, Color bgColor, Color textColor){
-    return Container(
-      color: bgColor,
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      child: Text(
-        message,
-        style: TextStyle(
-        color: textColor,
-        letterSpacing: 1.0,
-        fontFamily: 'RobotoCondensed',
-       ),
-      ),
+        onPressed: (){},
+      child: 
+        Icon(Icons.add),),
     );
   }
 }
-
