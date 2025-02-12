@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/message_list.dart';
+import 'package:flutter_application_1/act4/message_list.dart';
 
 class MessageContainer extends StatelessWidget {
   final MessageListDesc message;
